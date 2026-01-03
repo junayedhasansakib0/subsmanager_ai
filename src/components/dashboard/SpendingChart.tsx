@@ -1,5 +1,4 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { monthlySpendingData } from '@/data/mockData';
 import { cn } from '@/lib/utils';
 import {
   AreaChart,
@@ -11,10 +10,14 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-export function SpendingChart() {
+interface SpendingChartProps {
+  data?: Array<{ month: string; monthBn: string; amount: number }>;
+}
+
+export function SpendingChart({ data }: SpendingChartProps) {
   const { t, language } = useLanguage();
 
-  const chartData = monthlySpendingData.map((item) => ({
+  const chartData = (data || []).map((item) => ({
     ...item,
     name: language === 'bn' ? item.monthBn : item.month,
   }));

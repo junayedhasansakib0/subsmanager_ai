@@ -1,15 +1,28 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import { subscriptions } from '@/data/mockData';
 import { cn } from '@/lib/utils';
 
-export function UpcomingRenewals() {
+interface Subscription {
+  id: string;
+  name: string;
+  cost: number;
+  currency: string;
+  category: string;
+  categoryBn: string;
+  renewalDate: string;
+  status: string;
+  icon: string;
+  color: string;
+}
+
+interface UpcomingRenewalsProps {
+  data?: Subscription[];
+}
+
+export function UpcomingRenewals({ data }: UpcomingRenewalsProps) {
   const { t, language } = useLanguage();
 
-  // Get subscriptions sorted by renewal date (soonest first)
-  const upcoming = subscriptions
-    .filter((sub) => sub.status !== 'expired')
-    .sort((a, b) => new Date(a.renewalDate).getTime() - new Date(b.renewalDate).getTime())
-    .slice(0, 4);
+  // Use provided data or empty array
+  const upcoming = (data || []).slice(0, 4);
 
   const getDaysLeft = (date: string) => {
     const today = new Date();
@@ -35,7 +48,15 @@ export function UpcomingRenewals() {
       </h3>
 
       <div className="space-y-4">
-        {upcoming.map((sub) => {
+        {upcoming.length === 0 ? (
+          <p className={cn(
+            "text-sm text-muted-foreground text-center py-4",
+            language === 'bn' && "font-bangla"
+          )}>
+            {language === 'bn' ? 'শীঘ্রই কোনো নবীকরণ নেই' : 'No upcoming renewals'}
+          </p>
+        ) : (
+          upcoming.map((sub) => {
           const daysLeft = getDaysLeft(sub.renewalDate);
           const isUrgent = daysLeft <= 3;
 
@@ -66,7 +87,8 @@ export function UpcomingRenewals() {
               </div>
             </div>
           );
-        })}
+          })
+        )}
       </div>
     </div>
   );
