@@ -12,6 +12,12 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import VerifyEmail from "./pages/VerifyEmail";
 import Dashboard from "./pages/Dashboard";
+import DashboardHome from "./pages/DashboardHome";
+import SubscriptionsPage from "./pages/SubscriptionsPage";
+import AnalyticsPage from "./pages/AnalyticsPage";
+import SettingsPage from "./pages/SettingsPage";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsConditions from "./pages/TermsConditions";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,14 +48,32 @@ const router = createBrowserRouter(
           <Dashboard />
         </ProtectedRoute>
       ),
+      children: [
+        {
+          index: true,
+          element: <DashboardHome />,
+        },
+        {
+          path: "subscriptions",
+          element: <SubscriptionsPage />,
+        },
+        {
+          path: "analytics",
+          element: <AnalyticsPage />,
+        },
+        {
+          path: "settings",
+          element: <SettingsPage />,
+        },
+      ],
     },
     {
-      path: "/dashboard/*",
-      element: (
-        <ProtectedRoute>
-          <Dashboard />
-        </ProtectedRoute>
-      ),
+      path: "/privacy",
+      element: <PrivacyPolicy />,
+    },
+    {
+      path: "/terms",
+      element: <TermsConditions />,
     },
     {
       path: "*",

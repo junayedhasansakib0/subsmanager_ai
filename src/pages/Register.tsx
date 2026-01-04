@@ -129,13 +129,13 @@ const Register = () => {
             language === 'bn' && "font-bangla"
           )}>
             {t.auth.register.terms}{' '}
-            <a href="#" className="text-primary hover:underline">
+            <Link to="/terms" target="_blank" className="text-primary hover:underline">
               {t.auth.register.termsLink}
-            </a>{' '}
+            </Link>{' '}
             &{' '}
-            <a href="#" className="text-primary hover:underline">
+            <Link to="/privacy" target="_blank" className="text-primary hover:underline">
               {t.auth.register.privacyLink}
-            </a>
+            </Link>
           </Label>
         </div>
 

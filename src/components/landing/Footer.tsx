@@ -23,13 +23,35 @@ export function Footer() {
             </span>
           </Link>
 
-          {/* Copyright */}
-          <p className={cn(
-            "text-sm text-sidebar-foreground/60",
-            language === 'bn' && "font-bangla"
-          )}>
-            {t.footer.copyright}
-          </p>
+          {/* Links and Copyright */}
+          <div className="flex flex-col md:flex-row items-center gap-4">
+            <div className="flex gap-4">
+              <Link 
+                to="/privacy" 
+                className={cn(
+                  "text-sm text-sidebar-foreground/60 hover:text-sidebar-foreground transition-colors",
+                  language === 'bn' && "font-bangla"
+                )}
+              >
+                {language === 'bn' ? 'গোপনীয়তা নীতি' : 'Privacy Policy'}
+              </Link>
+              <Link 
+                to="/terms" 
+                className={cn(
+                  "text-sm text-sidebar-foreground/60 hover:text-sidebar-foreground transition-colors",
+                  language === 'bn' && "font-bangla"
+                )}
+              >
+                {language === 'bn' ? 'ব্যবহারের শর্তাবলী' : 'Terms & Conditions'}
+              </Link>
+            </div>
+            <p className={cn(
+              "text-sm text-sidebar-foreground/60",
+              language === 'bn' && "font-bangla"
+            )}>
+              {t.footer.copyright}
+            </p>
+          </div>
         </div>
       </div>
     </footer>

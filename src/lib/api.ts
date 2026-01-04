@@ -61,6 +61,12 @@ export const authAPI = {
   
   getMe: () =>
     api.get('/auth/me'),
+  
+  updateProfile: (data: { name: string }) =>
+    api.put('/auth/profile', data),
+  
+  changePassword: (data: { currentPassword: string; newPassword: string }) =>
+    api.put('/auth/change-password', data),
 };
 
 // Subscription API

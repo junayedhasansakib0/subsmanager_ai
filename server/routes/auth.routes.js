@@ -9,7 +9,9 @@ import {
   login,
   verifyEmail,
   resendVerification,
-  getMe
+  getMe,
+  updateProfile,
+  changePassword
 } from '../controllers/auth.controller.js';
 import { protect } from '../middleware/auth.middleware.js';
 
@@ -23,6 +25,8 @@ router.post('/resend-verification', resendVerification);
 
 // Protected routes
 router.get('/me', protect, getMe);
+router.put('/profile', protect, updateProfile);
+router.put('/change-password', protect, changePassword);
 
 export default router;
 

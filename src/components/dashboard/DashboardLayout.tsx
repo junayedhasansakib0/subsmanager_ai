@@ -15,10 +15,10 @@ import {
   LogOut,
   Menu,
   X,
-  Bell,
   Search,
   Clock,
 } from "lucide-react";
+import { NotificationsDropdown } from "./NotificationsDropdown";
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -234,10 +234,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               <LanguageSwitch />
               <ThemeToggle />
 
-              <Button variant="ghost" size="icon" className="relative">
-                <Bell className="w-5 h-5" />
-                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-destructive rounded-full" />
-              </Button>
+              <NotificationsDropdown />
 
               <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-secondary cursor-pointer transition-colors">
                 <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-medium">

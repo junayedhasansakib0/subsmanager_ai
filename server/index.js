@@ -31,13 +31,11 @@ connectDB();
 const getCorsOptions = () => {
   const isDevelopment = process.env.NODE_ENV !== 'production';
   
-  // Development: Allow multiple localhost origins
+  // Development: Allow localhost origins (port 8080 matches vite.config.ts)
   if (isDevelopment) {
     const allowedOrigins = [
       'http://localhost:8080',
-      'http://localhost:5173',
       'http://127.0.0.1:8080',
-      'http://127.0.0.1:5173',
     ];
     
     // Add custom frontend URL if provided
@@ -154,9 +152,7 @@ app.listen(PORT, () => {
   if (process.env.NODE_ENV !== 'production') {
     console.log(`🌐 CORS: Allowing origins:`);
     console.log(`   - http://localhost:8080`);
-    console.log(`   - http://localhost:5173`);
     console.log(`   - http://127.0.0.1:8080`);
-    console.log(`   - http://127.0.0.1:5173`);
     if (process.env.FRONTEND_URL) {
       console.log(`   - ${process.env.FRONTEND_URL} (custom)`);
     }

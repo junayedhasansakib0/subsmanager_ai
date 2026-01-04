@@ -1,5 +1,11 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { authAPI } from '@/lib/api';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
+import { authAPI } from "@/lib/api";
 
 interface User {
   id: string;
@@ -16,6 +22,7 @@ interface AuthContextType {
   register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
   checkAuth: () => Promise<void>;
+  updateUser: (userData: User) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -31,7 +38,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const checkAuth = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) {
         setIsLoading(false);
         return;
@@ -47,7 +54,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       });
     } catch (error) {
       // Token invalid or expired
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
       setUser(null);
     } finally {
       setIsLoading(false);
@@ -57,8 +64,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (email: string, password: string) => {
     const response = await authAPI.login({ email, password });
     const { token, user: userData } = response.data.data;
-    
-    localStorage.setItem('token', token);
+
+    localStorage.setItem("token", token);
     setUser({
       id: userData.id,
       email: userData.email,
@@ -68,14 +75,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const register = async (name: string, email: string, password: string) => {
-    const language = localStorage.getItem('language') || 'en';
+    const language = localStorage.getItem("language") || "en";
     await authAPI.register({ name, email, password, language });
     // Don't set user yet - email verification required
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     setUser(null);
+  };
+
+  const updateUser = (userData: User) => {
+    setUser(userData);
   };
 
   return (
@@ -88,6 +99,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         register,
         logout,
         checkAuth,
+        updateUser,
       }}
     >
       {children}
@@ -98,7 +110,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 }
